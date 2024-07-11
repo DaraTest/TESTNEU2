@@ -18,5 +18,3 @@ jobs:
       run: nuget restore TESTneu2/TESTneu2.sln
     - name: Build and Test
       run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release /p:RunCodeAnalysis=true
-Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe" $testDlls
-
