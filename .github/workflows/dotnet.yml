@@ -16,11 +16,7 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
     - name: Restore dependencies
       run: nuget restore TESTneu2/TESTneu2.sln
-    - name: Build
-      run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release
-    - name: Test
-      run: |
-        $testDlls = Get-ChildItem -Path **\*Tests.dll -Recurse | Select-Object -ExpandProperty FullName
-        & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe" $testDlls
-      shell: pwsh
+    - name: Build and Test
+      run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release /p:RunCodeAnalysis=true
+Studio\2022\Enterprise\Common7\IDE\Extensions\TestPlatform\vstest.console.exe" $testDlls
 
