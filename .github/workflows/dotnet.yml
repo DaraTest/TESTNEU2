@@ -11,10 +11,17 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    # Check out the repository
     - uses: actions/checkout@v4
+
+    # Set up MSBuild
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.1
+
+    # Restore dependencies
     - name: Restore dependencies
       run: nuget restore TESTneu2/TESTneu2.sln
+
+    # Build and Test
     - name: Build and Test
       run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release /p:RunCodeAnalysis=true
