@@ -23,10 +23,10 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore TESTNEU2/TESTneu2/TESTneu2.sln  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
+      run: dotnet restore TESTneu2/TESTneu2.sln  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
 
     - name: Build
-      run: dotnet build TESTNEU2/TESTneu2/TESTneu2.sln --configuration Release  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
+      run: dotnet build TESTneu2/TESTneu2.sln --configuration Release  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
 
     - name: Test
-      run: dotnet test TESTNEU2/TESTneu2/TESTneu2.sln --configuration Release  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
+      run: dotnet test TESTneu2/TESTneu2.sln --configuration Release  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
