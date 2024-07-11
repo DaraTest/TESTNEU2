@@ -13,9 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Restore dependencies
-      run: nuget restore TESTneu2.sln
+      run: nuget restore TESTneu2/TESTneu2.sln
     - name: Build
-      run: msbuild TESTneu2.sln /p:Configuration=Release
+      run: msbuild TESTNEU2/TESTneu2.sln /p:Configuration=Release
     - name: Test
       run: |
         vstest.console.exe **\*Tests.dll
