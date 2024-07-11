@@ -1,0 +1,29 @@
+name: .NET Framework CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Repository auschecken
+      uses: actions/checkout@v4
+      
+    - name: MSBuild einrichten
+      uses: microsoft/setup-msbuild@v1.1
+
+    - name: NuGet einrichten
+      uses: NuGet/setup-nuget@v1
+
+    - name: Abhängigkeiten wiederherstellen
+      run: |
+        for /r %%i in (*.sln) do nuget restore "%%i"
+
+    - name: Build und Test
+      run: |
+        for /r %%i in (*.sln) do msbuild "%%i" /p:Configuration=Release /p:RunCodeAnalysis=true
