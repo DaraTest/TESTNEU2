@@ -1,4 +1,4 @@
-name: .NET Framework CI
+name: .NET CI
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-windows:
     runs-on: windows-latest
 
     steps:
@@ -27,6 +27,27 @@ jobs:
 
     - name: Build
       run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release
+
+    - name: Test
+      run: dotnet test TESTneu2/TESTneu2.sln --configuration Release
+
+  build-ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore TESTneu2/TESTneu2.sln
+
+    - name: Build
+      run: dotnet build TESTneu2/TESTneu2.sln --configuration Release
 
     - name: Test
       run: dotnet test TESTneu2/TESTneu2.sln --configuration Release
