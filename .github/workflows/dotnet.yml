@@ -1,0 +1,24 @@
+name: .NET Framework CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 4.7.2
+    - name: Restore dependencies
+      run: nuget restore
+    - name: Build
+      run: msbuild /p:Configuration=Release
+    - name: Test
+      run: vstest.console.exe **\*Tests.dll
