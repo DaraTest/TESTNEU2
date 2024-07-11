@@ -1,4 +1,4 @@
-name: .NET CI 3
+name: .NET Framework CI
 
 on:
   push:
@@ -8,14 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: windows-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
@@ -23,10 +23,10 @@ jobs:
         dotnet-version: '6.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore TESTneu2/TESTneu2.sln  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
+      run: dotnet restore TESTneu2/TESTneu2.sln
 
     - name: Build
-      run: dotnet build TESTneu2/TESTneu2.sln --configuration Release  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
+      run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release
 
     - name: Test
-      run: dotnet test TESTneu2/TESTneu2.sln --configuration Release  # Gib hier den tatsächlichen Pfad zu deiner .sln-Datei an
+      run: dotnet test TESTneu2/TESTneu2.sln --configuration Release
