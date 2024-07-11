@@ -1,0 +1,27 @@
+name: .NET Framework CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+      
+    - name: Restore dependencies
+      run: nuget restore TESTneu2/TESTneu2.sln
+      
+    - name: Build solution
+      run: msbuild TESTneu2/TESTneu2.sln /p:Configuration=Release /p:RunCodeAnalysis=true
+
+    - name: Run tests
+      run: msbuild TESTneu2/TESTneu2.sln /t:Test /p:Configuration=Release
