@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Restore dependencies
-      run: nuget restore
+      run: nuget restore TESTneu2.sln
     - name: Build
       run: msbuild TESTneu2.sln /p:Configuration=Release
     - name: Test
