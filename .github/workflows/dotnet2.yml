@@ -21,9 +21,17 @@ jobs:
       uses: NuGet/setup-nuget@v1
 
     - name: Abhängigkeiten wiederherstellen
+      shell: pwsh
       run: |
-        for /r %%i in (*.sln) do nuget restore "%%i"
+        $solutionFiles = Get-ChildItem -Recurse -Filter *.sln
+        foreach ($solutionFile in $solutionFiles) {
+          nuget restore $solutionFile.FullName
+        }
 
     - name: Build und Test
+      shell: pwsh
       run: |
-        for /r %%i in (*.sln) do msbuild "%%i" /p:Configuration=Release /p:RunCodeAnalysis=true
+        $solutionFiles = Get-ChildItem -Recurse -Filter *.sln
+        foreach ($solutionFile in $solutionFiles) {
+          msbuild $solutionFile.FullName /p:Configuration=Release /p:RunCodeAnalysis=true
+        }
