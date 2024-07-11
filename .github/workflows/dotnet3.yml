@@ -1,0 +1,29 @@
+name: .NET Framework CI3
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+
+    steps:
+    - name: Repository auschecken
+      uses: actions/checkout@v4
+
+    - name: .NET einrichten
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Abhängigkeiten wiederherstellen
+      run: dotnet restore
+
+    - name: Build und Test
+      run: dotnet build --configuration Release && dotnet test --no-build --verbosity normal --configuration Release
