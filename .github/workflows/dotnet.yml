@@ -12,13 +12,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 4.7.2
     - name: Restore dependencies
       run: nuget restore
     - name: Build
-      run: msbuild /p:Configuration=Release
+      run: msbuild TESTneu2.sln /p:Configuration=Release
     - name: Test
-      run: vstest.console.exe **\*Tests.dll
+      run: |
+        vstest.console.exe **\*Tests.dll
