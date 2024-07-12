@@ -1,0 +1,33 @@
+name: .NET Framework CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v4
+
+      # Setup .NET based on global.json
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          use-global-json: true
+
+      # Restore dependencies
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Build the solution
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      # Run tests
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
