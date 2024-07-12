@@ -1,33 +1,30 @@
-name: .NET Framework CI
+name: .NET Framework CI last
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
-      # Check out the repository
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      # Setup .NET based on global.json
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          use-global-json: true
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4.0.1
+      with:
+        dotnet-version: 8.0.303  # Ändere dies zur benötigten .NET-Version
 
-      # Restore dependencies
-      - name: Restore dependencies
-        run: dotnet restore
+    - name: Restore dependencies
+      run: dotnet restore
 
-      # Build the solution
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+    - name: Build
+      run: dotnet build --configuration Release
 
-      # Run tests
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
+    - name: Test
+      run: dotnet test --configuration Release
