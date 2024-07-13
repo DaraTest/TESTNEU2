@@ -1,0 +1,33 @@
+name: .NET Framework CI last
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    # Check out the repository
+    - uses: actions/checkout@v4
+
+    # Set up .NET
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'  # Version of .NET SDK you want to use
+
+    # Restore dependencies
+    - name: Restore dependencies
+      run: dotnet restore TESTneu2/TESTneu2.sln
+
+    # Build
+    - name: Build
+      run: dotnet build TESTneu2/TESTneu2.sln --configuration Release
+
+    # Test
+    - name: Test
+      run: dotnet test TESTneu2/TESTneu2.sln --configuration Release --no-build --verbosity normal
